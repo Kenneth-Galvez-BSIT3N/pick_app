@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pick_app/pages/homepage/homepage.dart';
+import 'package:pick_app/pages/register/register_rider.dart';
+import 'package:pick_app/pages/register/register_user.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -59,9 +62,11 @@ class _LoginState extends State<Login> {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Respond to button press
+                          Navigator.push(
+                            context, 
+                          MaterialPageRoute(builder: (context)=> const Homepage()));
                         },
-                        style: ElevatedButton.styleFrom(primary: Colors.yellow),
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
                         child: const Text(
                           'LOGIN',
                           style: TextStyle(color: Colors.black),
@@ -69,10 +74,18 @@ class _LoginState extends State<Login> {
                       )),
                   const SizedBox(height: 10),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context, 
+                          MaterialPageRoute(builder: (context)=> const RegisterUser()));
+                      },
                       child: const Text('Dont have account? Sign up here.')),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context, 
+                          MaterialPageRoute(builder: (context)=> const RegisterRider()));
+                      },
                       child: const Text(
                           'Need a rider account?. Register as driver here.'))
                 ],

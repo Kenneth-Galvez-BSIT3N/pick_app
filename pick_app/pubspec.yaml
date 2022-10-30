@@ -27,6 +27,12 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flutter_polyline_points: ^1.0.0
+  location: ^4.4.0
+  flutter_svg: ^1.1.0
+  google_maps_flutter: ^2.2.1
+  sliding_up_panel: ^2.0.0+1
+  google_place: ^0.4.7
   flutter:
     sdk: flutter
 
