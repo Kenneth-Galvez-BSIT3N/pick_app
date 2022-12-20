@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pick_app/pages/history/history_details.dart';
 import 'package:pick_app/pages/login/login.dart';
 
 import '../../widgets/core/drawer/drawer.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);
-
   @override
   State<HistoryPage> createState() => _HistoryPageState();
 }
@@ -41,7 +41,36 @@ class _HistoryPageState extends State<HistoryPage> {
           backgroundColor: const Color(0xffE1AD01),
         ),
         drawer: const DrawerWidget(),
-        body: Container() //Start your code here
+        body: Container(
+          margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+          child:  ListView(
+              children: [
+                ListTile(
+                  title: const Text('Address 1'),
+                  subtitle: const Text('Date and Time of booking'),
+                  onTap: (){
+                    Navigator.push(
+                            context, 
+                          MaterialPageRoute(builder: (context)=> const HistoryDetails()));
+                  },
+                ),
+               const  Divider(color: Colors.grey,),
+               ListTile(
+                  title: const Text('Address 1'),
+                  subtitle: const Text('Date and Time of booking'),
+                  onTap: (){},
+                ),
+               const  Divider(color: Colors.grey,),
+               ListTile(
+                  title: const Text('Address 1'),
+                  subtitle: const Text('Date and Time of booking'),
+                  onTap: (){},
+                ),
+               const  Divider(color: Colors.grey,)
+              ],
+            ),
+        
+         )
       );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:pick_app/pages/about/about.dart';
 import 'package:pick_app/pages/history/history.dart';
@@ -5,7 +7,9 @@ import 'package:pick_app/pages/homepage/homepage.dart';
 
 class DrawerWidget extends StatefulWidget {
   final String? title;
-  const DrawerWidget({Key? key, this.title}) : super(key: key);
+  final String? displayName;
+  final String? email;
+  const DrawerWidget({Key? key, this.title, this.displayName = "", this.email = ""}) : super(key: key);
 
   @override
   State<DrawerWidget> createState() => _DrawerWidgetState();
@@ -17,7 +21,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-
     return Row(
       children: [
         Drawer(
@@ -25,14 +28,35 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             // Important: Remove any padding from the ListView.
             padding: EdgeInsets.zero,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column( //You will start program here Mike
-                  children: const [
-                    Text('Bogart Bardagul')
-                  ],
-                )
-              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.35,
+                color: const Color(0xffE1AD01),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top:20),
+                      height: 115,
+                      width: 115,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        fit: StackFit.expand,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage('https://ui-avatars.com/api/?name=${widget.displayName.toString()}'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(widget.displayName.toString() == '' || widget.displayName.toString() == 'null' ? 'No Name' : widget.displayName.toString(), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(widget.email.toString() == '' || widget.email.toString() == 'null' ? 'No Email' : widget.email.toString(), style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),),
+                  ],                ),              
+                ),
               const Divider(
                 height: 1,
                 thickness: 1,
@@ -40,11 +64,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ListTile(
                 leading: const Icon(Icons.map),
                 title: const Text('Map'),
-                selected: _selectedDestination == 0,
                 onTap: (){
                 Navigator.pop(context);
                 Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Homepage(),
+                  MaterialPageRoute(builder: (context) => const Homepage(navigateBool: false,),
                   ),
                 );
         },
@@ -52,7 +75,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ListTile(
                 leading: const Icon(Icons.list),
                 title: const Text('History'),
-                selected: _selectedDestination == 1,
                 onTap: (){
                 Navigator.pop(context);
                 Navigator.push(context,
@@ -65,16 +87,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 height: 1,
                 thickness: 1,
               ),
-              const Padding(
-                padding:  EdgeInsets.all(16.0),
-                child: Text(
-                  'Label',
-                ),
-              ),
+              // const Padding(
+              //   padding:  EdgeInsets.all(16.0),
+              //   child: Text(
+              //     'Label',
+              //   ),
+              // ),
               ListTile(
                 leading: const Icon(Icons.question_mark),
                 title: const Text('About'),
-                selected: _selectedDestination == 3,
                 onTap: (){
                 Navigator.pop(context);
                 Navigator.push(context,

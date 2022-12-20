@@ -1,7 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pick_app/main.dart';
 import 'package:pick_app/pages/homepage/homepage.dart';
 import 'package:pick_app/pages/register/register_rider.dart';
 import 'package:pick_app/pages/register/register_user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -10,7 +13,89 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<Login> with TickerProviderStateMixin{
+  late AnimationController controller;
+  TextEditingController _username = TextEditingController();
+  TextEditingController _password = TextEditingController();
+  bool buttonFlag = false;
+  String errorText = '';
+  Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+  // Ideal time to initialize
+  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  //...
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..addListener(() {
+        setState(() {});
+      });
+    controller.repeat(reverse: true);
+    super.initState();
+    main();
+    
+  FirebaseAuth.instance
+  .authStateChanges()
+  .listen((User? user) {
+    if (user == null) {
+      
+    } else {
+      // print(user);
+      Navigator.push(context, MaterialPageRoute(builder:((context) => Homepage(navigateBool: false, displayName:user.displayName,email: user.email, photoUrl: user.photoURL,))));
+    }
+  }).onError((error)=>{
+    
+  });
+  }
+
+  void LoginUser() async{
+    if(_username.text == '' || _password.text == ''){
+      setState(() {
+        errorText = 'Please input all fields.';
+        buttonFlag = false;
+      });
+    }
+    else{
+      try {
+        final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _username.text,
+          password: _password.text
+        ).then((value) => {
+          Navigator.push(context, MaterialPageRoute(builder:((context) => Homepage(navigateBool: false, displayName: value.user?.displayName,email: value.user?.email, photoUrl: value.user?.photoURL, uid: value.user?.uid,))))
+        });
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+          setState(() {
+            buttonFlag = false;
+            errorText = 'No user found for that email.';
+          });
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+          setState(() {
+            buttonFlag = false;
+            errorText = 'Wrong password provided for that user.';
+          });
+        }
+      }
+    }
+    
+// await FirebaseAuth.instance.signOut();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,8 +111,12 @@ class _LoginState extends State<Login> {
                   const SizedBox(
                     height: 30,
                   ),
+                  Text(errorText, style: TextStyle(color: Colors.red),),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextFormField(
-                    initialValue: '',
+                    controller: _username,
                     decoration: const InputDecoration(
                         labelText: 'Username',
                         border: OutlineInputBorder(),
@@ -41,7 +130,10 @@ class _LoginState extends State<Login> {
                     height: 10,
                   ),
                   TextFormField(
-                    initialValue: '',
+                    controller: _password,
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
                     decoration: const InputDecoration(
                       fillColor: Colors.yellow,
                       labelText: 'Password',
@@ -61,17 +153,27 @@ class _LoginState extends State<Login> {
                       width: MediaQuery.of(context).size.width,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context, 
-                          MaterialPageRoute(builder: (context)=> const Homepage()));
+                        onPressed: () =>buttonFlag ? null :{
+                         
+                          LoginUser(),
+                          // setState(() {
+                          //   buttonFlag = true;
+                          // }),
+
                         },
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow, ),
                         child: const Text(
                           'LOGIN',
                           style: TextStyle(color: Colors.black),
                         ),
                       )),
+                  const SizedBox(height: 10),
+                  Visibility(
+                    visible: buttonFlag,
+                    child: CircularProgressIndicator(
+                    value: controller.value,
+                    semanticsLabel: 'Circular progress indicator',
+                  ),),
                   const SizedBox(height: 10),
                   TextButton(
                       onPressed: () {
