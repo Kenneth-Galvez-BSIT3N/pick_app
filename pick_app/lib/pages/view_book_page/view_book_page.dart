@@ -61,75 +61,27 @@ Future<void> updateBookings() {
       appBar: AppBar(
         backgroundColor: const Color(0xffE1AD01),
       ),
-      body: Container (
-        margin: const EdgeInsets.all(5),
-        child: Center(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                
-                SizedBox(width: MediaQuery.of(context).size.width * 0.4,
-                child: const Text('Full Name:', style: TextStyle(fontSize: 20),),
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.5,
+      body: ListView(
+          children: <Widget>[
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5,
                 child: Flexible(child: Text(widget.details['fullname'], style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
                 ),
-                
-              ],
-            ),
             const SizedBox(height: 20,),
-            Row(
-              children: [
-                
-                SizedBox(width: MediaQuery.of(context).size.width * 0.4,
-                child: const Text('Pick Up Location:', style: TextStyle(fontSize: 20),),
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.5,
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5,
                 child: Flexible(child:  Text(widget.details['pickup_location'], style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
                 ),
-                
-              ],
-            ),
             const SizedBox(height: 20,),
-             Row(
-              children: [
-                
-                SizedBox(width: MediaQuery.of(context).size.width * 0.4,
-                child: const Text('Destination Location:', style: TextStyle(fontSize: 20),),
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.5,
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5,
                 child: Flexible(child:  Text(widget.details['destination'], style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
                 ),
-                
-              ],
-            ),
             const SizedBox(height: 20,),
-            Row(
-              children: [
-                
-                SizedBox(width: MediaQuery.of(context).size.width * 0.4,
-                child: const Text('Description:', style: TextStyle(fontSize: 20),),
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.5,
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5,
                 child: Flexible(child: Text(widget.details['description'], style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
                 ),
-                
-              ],
-            ),
             const SizedBox(height: 20,),
-            Row(
-              children: [
-                
-                SizedBox(width: MediaQuery.of(context).size.width * 0.4,
-                child: const Text('Price:', style: TextStyle(fontSize: 20),),
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.5,
+            SizedBox(width: MediaQuery.of(context).size.width * 0.5,
                 child: Flexible(child:  Text(widget.details['price'], style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
                 ),
-                
-              ],
-            ),
             const SizedBox(height: 20,),
             SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -147,7 +99,93 @@ Future<void> updateBookings() {
           )),
           ],
       ),
-      ))
     );
   }
 }
+
+
+// ListView(
+//           children: <Widget>[
+//             Expanded(child: 
+//               Row(
+//               children: [
+                
+//                 SizedBox(width: MediaQuery.of(context).size.width * 0.4,
+//                 child: const Text('Full Name:', style: TextStyle(fontSize: 20),),
+//                 ),
+//                 SizedBox(width: MediaQuery.of(context).size.width * 0.5,
+//                 child: Flexible(child: Text(widget.details['fullname'], style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
+//                 ),
+                
+//               ],
+//             ),
+//             ),
+//             const SizedBox(height: 20,),
+//             Expanded(child: Row(
+//               children: [
+                
+//                 SizedBox(width: MediaQuery.of(context).size.width * 0.4,
+//                 child: const Text('Pick Up Location:', style: TextStyle(fontSize: 20),),
+//                 ),
+//                 SizedBox(width: MediaQuery.of(context).size.width * 0.5,
+//                 child: Flexible(child:  Text(widget.details['pickup_location'], style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+//                 ),
+                
+//               ],
+//             ),),
+//             const SizedBox(height: 20,),
+//             Expanded(child: Row(
+//               children: [
+                
+//                 SizedBox(width: MediaQuery.of(context).size.width * 0.4,
+//                 child: const Text('Destination Location:', style: TextStyle(fontSize: 20),),
+//                 ),
+//                 SizedBox(width: MediaQuery.of(context).size.width * 0.5,
+//                 child: Flexible(child:  Text(widget.details['destination'], style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+//                 ),
+                
+//               ],
+//             ),),
+//             const SizedBox(height: 20,),
+//             Expanded(child: Row(
+//               children: [
+                
+//                 SizedBox(width: MediaQuery.of(context).size.width * 0.4,
+//                 child: const Text('Description:', style: TextStyle(fontSize: 20),),
+//                 ),
+//                 SizedBox(width: MediaQuery.of(context).size.width * 0.5,
+//                 child: Flexible(child: Text(widget.details['description'], style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+//                 ),
+                
+//               ],
+//             ),),
+//             const SizedBox(height: 20,),
+//             Expanded(child: Row(
+//               children: [
+                
+//                 SizedBox(width: MediaQuery.of(context).size.width * 0.4,
+//                 child: const Text('Price:', style: TextStyle(fontSize: 20),),
+//                 ),
+//                 SizedBox(width: MediaQuery.of(context).size.width * 0.5,
+//                 child: Flexible(child:  Text(widget.details['price'], style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+//                 ),
+                
+//               ],
+//             ),),
+//             const SizedBox(height: 20,),
+//             SizedBox(
+//           width: MediaQuery.of(context).size.width,
+//           height: 50,
+//           child: ElevatedButton.icon(
+//             icon: const Icon(Icons.book),
+//             onPressed: (){
+//               acceptBooking();
+//             },
+//             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xffE1AD01)),
+//             label: const Text(
+//               'Accept Booking',
+//               style: TextStyle(color: Colors.white),
+//             ),
+//           )),
+//           ],
+//       ),

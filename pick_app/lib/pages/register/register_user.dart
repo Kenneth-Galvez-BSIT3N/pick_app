@@ -24,47 +24,50 @@ class _RegisterUserState extends State<RegisterUser> {
   FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  
-  
-
   Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
-  // Ideal time to initialize
-  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    runApp(const MyApp());
+    // Ideal time to initialize
+    // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   }
   // Ideal time to initialize
   // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
   //...
 
-  void registeruser(fullname,phone_number)async{
+  void registeruser(fullname, phone_number) async {
     try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _email.text,
-        password: _password.text,
-      ).then(((value) => {
-        value.user?.updateDisplayName(fullname),
-        firestoreInstance.collection("users").doc(auth.currentUser?.uid.toString()).set({
-          "full_name":_fullname.text,
-          "email":_email.text,
-          "uid":value.user?.uid,
-          "on_book":false,
-          "phone_number":phone_number,
-          "user_type": "user"
-        }).then((value)=> {}),
-        Navigator.push(context, MaterialPageRoute(builder:((context) => const Login())))
-      }));
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: _email.text,
+            password: _password.text,
+          )
+          .then(((value) => {
+                value.user?.updateDisplayName(fullname),
+                firestoreInstance
+                    .collection("users")
+                    .doc(auth.currentUser?.uid.toString())
+                    .set({
+                  "full_name": _fullname.text,
+                  "email": _email.text,
+                  "uid": value.user?.uid,
+                  "on_book": false,
+                  "phone_number": phone_number,
+                  "user_type": "user"
+                }).then((value) => {}),
+                Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => const Login())))
+              }));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        ;
       }
     } catch (e) {
       print(e);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,125 +75,128 @@ class _RegisterUserState extends State<RegisterUser> {
       appBar: AppBar(
         backgroundColor: const Color(0xffE1AD01),
       ),
-      body: Container(
-        margin: const EdgeInsets.only(top: 50, left: 20, right: 20),
-        child: Column(
-          children: [
-            const Text('Register here as User', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+      body: Center(
+        child: ListView(
+          padding: const EdgeInsets.all(8),
+          children: <Widget>[
+            const Text(
+              'Register here as User',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(
               height: 20,
             ),
             TextFormField(
-                    controller: _fullname,
-                    decoration: const InputDecoration(
-                        labelText: 'Full name',
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter your Full Name'
-                        // suffixIcon: Icon(
-                        //   Icons.error,
-                        // ),
-                        ),
+              controller: _fullname,
+              decoration: const InputDecoration(
+                  labelText: 'Full name',
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter your Full Name'
+                  // suffixIcon: Icon(
+                  //   Icons.error,
+                  // ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: _email,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                        labelText: 'Email',
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter your Email'
-                        // suffixIcon: Icon(
-                        //   Icons.error,
-                        // ),
-                        ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: _phoneNumber,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                        labelText: 'Phone Number',
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter your Phone Number'
-                        // suffixIcon: Icon(
-                        //   Icons.error,
-                        // ),
-                        ),
-                  ),
+            ),
             const SizedBox(
-                    height: 10,
+              height: 10,
+            ),
+            TextFormField(
+              controller: _email,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter your Email'
+                  // suffixIcon: Icon(
+                  //   Icons.error,
+                  // ),
                   ),
-                  TextFormField(
-                    controller: _password,
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: const InputDecoration(
-                      fillColor: Colors.yellow,
-                      labelText: 'Password',
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.yellow, width: 2)),
-                      hintText: 'Enter your password',
-                      // suffixIcon: Icon(
-                      //   Icons.error,
-                      // ),
-                    ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: _phoneNumber,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter your Phone Number'
+                  // suffixIcon: Icon(
+                  //   Icons.error,
+                  // ),
                   ),
-                  const SizedBox(
-                    height: 10,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: _password,
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                fillColor: Colors.yellow,
+                labelText: 'Password',
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.yellow, width: 2)),
+                hintText: 'Enter your password',
+                // suffixIcon: Icon(
+                //   Icons.error,
+                // ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: _confirmPassword,
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                fillColor: Colors.yellow,
+                labelText: 'Confirm Password',
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.yellow, width: 2)),
+                hintText: 'Confirm your password',
+                // suffixIcon: Icon(
+                //   Icons.error,
+                // ),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    // MaterialPageRoute(builder: (context)=> const Homepage()));
+                    registeruser(_fullname.text, _phoneNumber.text);
+                  },
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
+                  child: const Text(
+                    'REGISTER',
+                    style: TextStyle(color: Colors.black),
                   ),
-                  TextFormField(
-                    controller: _confirmPassword,
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: const InputDecoration(
-                      fillColor: Colors.yellow,
-                      labelText: 'Confirm Password',
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.yellow, width: 2)),
-                      hintText: 'Confirm your password',
-                      // suffixIcon: Icon(
-                      //   Icons.error,
-                      // ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context, 
-                          // MaterialPageRoute(builder: (context)=> const Homepage()));
-                          registeruser(_fullname.text,_phoneNumber.text);
-                        },
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
-                        child: const Text(
-                          'REGISTER',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      )),
-                const SizedBox(height: 10,),
-                TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context, 
-                          MaterialPageRoute(builder: (context)=> const Login()));
-                      },
-                      child: const Text('Already have an account? Sign in instead')),
+                )),
+            const SizedBox(
+              height: 10,
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Login()));
+                },
+                child: const Text('Already have an account? Sign in instead')),
           ],
         ),
-      ), //Dito ka magstart ng code mo
+      ),
     );
   }
 }

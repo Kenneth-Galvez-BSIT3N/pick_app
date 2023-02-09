@@ -61,49 +61,49 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 height: 1,
                 thickness: 1,
               ),
-              ListTile(
-                leading: const Icon(Icons.map),
-                title: const Text('Map'),
-                onTap: (){
-                Navigator.pop(context);
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Homepage(navigateBool: false,),
-                  ),
-                );
-        },
-              ),
-              ListTile(
-                leading: const Icon(Icons.list),
-                title: const Text('History'),
-                onTap: (){
-                Navigator.pop(context);
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HistoryPage(),
-                  ),
-                );
-        },
-              ),
-              const Divider(
-                height: 1,
-                thickness: 1,
-              ),
-              // const Padding(
-              //   padding:  EdgeInsets.all(16.0),
-              //   child: Text(
-              //     'Label',
-              //   ),
-              // ),
-              ListTile(
-                leading: const Icon(Icons.question_mark),
-                title: const Text('About'),
-                onTap: (){
-                Navigator.pop(context);
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AboutPage(),
-                  ),
-                );
-        },
-              ),
+        //       ListTile(
+        //         leading: const Icon(Icons.map),
+        //         title: const Text('Map'),
+        //         onTap: (){
+        //         Navigator.pop(context);
+        //         Navigator.push(context,
+        //           MaterialPageRoute(builder: (context) => const Homepage(navigateBool: false,),
+        //           ),
+        //         );
+        // },
+        //       ),
+        //       ListTile(
+        //         leading: const Icon(Icons.list),
+        //         title: const Text('History'),
+        //         onTap: (){
+        //         Navigator.pop(context);
+        //         Navigator.push(context,
+        //           MaterialPageRoute(builder: (context) => const HistoryPage(),
+        //           ),
+        //         );
+        // },
+        //       ),
+        //       const Divider(
+        //         height: 1,
+        //         thickness: 1,
+        //       ),
+        //       // const Padding(
+        //       //   padding:  EdgeInsets.all(16.0),
+        //       //   child: Text(
+        //       //     'Label',
+        //       //   ),
+        //       // ),
+        //       ListTile(
+        //         leading: const Icon(Icons.question_mark),
+        //         title: const Text('About'),
+        //         onTap: (){
+        //         Navigator.pop(context);
+        //         Navigator.push(context,
+        //           MaterialPageRoute(builder: (context) => const AboutPage(),
+        //           ),
+        //         );
+        // },
+        //       ),
             ],
           ),
         ),

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pick_app/pages/history/history_details.dart';
 import 'package:pick_app/pages/login/login.dart';
@@ -5,12 +7,41 @@ import 'package:pick_app/pages/login/login.dart';
 import '../../widgets/core/drawer/drawer.dart';
 
 class HistoryPage extends StatefulWidget {
-  const HistoryPage({Key? key}) : super(key: key);
+  final displayName;
+  final email;
+  const HistoryPage({Key? key, this.displayName, this.email}) : super(key: key);
   @override
   State<HistoryPage> createState() => _HistoryPageState();
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  List userHistory = [];
+
+  void getHistory(){
+    final User? user = auth.currentUser;
+    final uid = user?.uid;
+    FirebaseFirestore.instance
+    .collection('bookings')
+    .where('status', isEqualTo: 'done')
+    .get()
+    .then((value) => {
+        for (var element in value.docs) { 
+          if(element['rider_id'] == uid || element['uid'] == uid){
+            setState(() {
+              userHistory.add(element);
+          })
+          }
+          
+        }
+      
+    });
+  }
+  @override
+  void initState() {
+    
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -40,12 +71,15 @@ class _HistoryPageState extends State<HistoryPage> {
           ],
           backgroundColor: const Color(0xffE1AD01),
         ),
-        drawer: const DrawerWidget(),
+        drawer: DrawerWidget(displayName: widget.displayName,email: widget.email,),
         body: Container(
           margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
           child:  ListView(
               children: [
-                ListTile(
+                for(var element in userHistory)
+                Row(
+                  children: [
+                    ListTile(
                   title: const Text('Address 1'),
                   subtitle: const Text('Date and Time of booking'),
                   onTap: (){
@@ -53,20 +87,23 @@ class _HistoryPageState extends State<HistoryPage> {
                             context, 
                           MaterialPageRoute(builder: (context)=> const HistoryDetails()));
                   },
-                ),
-               const  Divider(color: Colors.grey,),
-               ListTile(
-                  title: const Text('Address 1'),
-                  subtitle: const Text('Date and Time of booking'),
-                  onTap: (){},
-                ),
-               const  Divider(color: Colors.grey,),
-               ListTile(
-                  title: const Text('Address 1'),
-                  subtitle: const Text('Date and Time of booking'),
-                  onTap: (){},
-                ),
-               const  Divider(color: Colors.grey,)
+                  ),
+                const  Divider(color: Colors.grey,),
+                  ],
+                )
+                
+              //  ListTile(
+              //     title: const Text('Address 1'),
+              //     subtitle: const Text('Date and Time of booking'),
+              //     onTap: (){},
+              //   ),
+              //  const  Divider(color: Colors.grey,),
+              //  ListTile(
+              //     title: const Text('Address 1'),
+              //     subtitle: const Text('Date and Time of booking'),
+              //     onTap: (){},
+              //   ),
+              //  const  Divider(color: Colors.grey,)
               ],
             ),
         
